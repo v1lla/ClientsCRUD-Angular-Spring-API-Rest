@@ -1,0 +1,24 @@
+<div class="container mt-5">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Surname</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Created At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let client of clientList; index as i">
+        <td>{{ i + 1 }}</td>
+        <td>{{ client.id }}</td>
+        <td>{{ client.name }}</td>
+        <td>{{ client.surname }}</td>
+        <td>{{ client.phone }}</td>
+        <td>{{ client.createAt }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
