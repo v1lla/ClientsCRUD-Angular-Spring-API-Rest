@@ -1,24 +1,120 @@
 <div class="container mt-5">
+  <button
+    (click)="openModal()"
+    type="button"
+    class="editButton btn btn-success mb-5"
+    title="Nuevo cliente"
+  >
+    Nuevo cliente
+  </button>
   <table class="table table-striped">
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">ID</th>
         <th scope="col">Name</th>
         <th scope="col">Surname</th>
         <th scope="col">Phone</th>
         <th scope="col">Created At</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let client of clientList; index as i">
         <td>{{ i + 1 }}</td>
-        <td>{{ client.id }}</td>
         <td>{{ client.name }}</td>
         <td>{{ client.surname }}</td>
         <td>{{ client.phone }}</td>
         <td>{{ client.createAt }}</td>
+        <td>
+          <button
+            (click)="openModal(client)"
+            type="button"
+            class="editButton btn btn-primary"
+            title="Editar cliente"
+          >
+            <i class="bi bi-pen"></i>
+          </button>
+          <button
+            (click)="eliminarCliente(client.id)"
+            type="button"
+            class="btn btn-danger"
+            title="Eliminar cliente"
+          >
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
+</div>
+
+<div id="myModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modificando cliente</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          style="border: none"
+          (click)="openModal()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="inputClientName">Nombre</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputClientName"
+              name="clientName"
+              placeholder="Nombre"
+              value="{{ clientToModifyCreate.name }}"
+            />
+          </div>
+          <div class="form-group">
+            <label for="inputClientSurname">Apellido</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputClientSurname"
+              name="clientSurname"
+              placeholder="Apellido"
+              value="{{ clientToModifyCreate.surname }}"
+            />
+          </div>
+          <div class="form-group">
+            <label for="inputClientPhone">Teléfono</label>
+            <input
+              type="phone"
+              class="form-control"
+              id="inputClientPhone"
+              name="clientPhone"
+              placeholder="Teléfono"
+              value="{{ clientToModifyCreate.phone }}"
+            />
+          </div>
+          <div class="form-group" >
+            <label for="inputClientCreateAt">Fecha de creación</label>
+            <input disabled
+              type="text"
+              class="form-control"
+              id="inputClientCreateAt"
+              name="clientCreateAt"
+              placeholder="Fecha de creación"
+              value="{{ clientToModifyCreate.createAt }}"
+            />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" title="Modificar" (click)="modificarCrearCliente()">Modificar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
