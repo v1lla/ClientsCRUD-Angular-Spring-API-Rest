@@ -1,2 +1,2 @@
 # ClientsCRUD-Angular-Spring-API-Rest
-Application for practisising Angular and consuming API REST services
+Application for practising Angular and consuming API REST services with Spring
