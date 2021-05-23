@@ -33,7 +33,7 @@ public class ClientRestController {
 		}
 	}
 
-	@GetMapping("client/{id}")
+	@GetMapping("clients/{id}")
 	public ResponseEntity<Cliente> getClientById(@PathVariable("id") Long id) {
 
 		try {
@@ -51,7 +51,7 @@ public class ClientRestController {
 		}
 	}
 
-	@DeleteMapping("client/{id}")
+	@DeleteMapping("clients/{id}")
 	public ResponseEntity<?> deleteClient(@PathVariable("id") Long id) {
 
 		try {
@@ -70,29 +70,28 @@ public class ClientRestController {
 
 	}
 
-	@PostMapping("client")
-	public ResponseEntity<?> createClient(@RequestBody Cliente client) {
+	@PostMapping("clients")
+	public ResponseEntity<Cliente> createClient(@RequestBody Cliente client) {
 
 		try {
-			clientService.createClient(client);
-			return new ResponseEntity<>(HttpStatus.CREATED);
+			Cliente cliente = clientService.saveClient(client);
+			return new ResponseEntity<>(cliente, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
 
-	@PutMapping("client/{id}")
-	public ResponseEntity<?> editClient(@PathVariable("id") Long id, @RequestBody Cliente client) {
+	@PutMapping("clients/{id}")
+	public ResponseEntity<Cliente> editClient(@PathVariable("id") Long id, @RequestBody Cliente cliente) {
 		try {
 			Cliente clientFound = clientService.getClientById(id);
+			clientFound.setName(cliente.getName());
+			clientFound.setSurname(cliente.getSurname());
+			clientFound.setPhone(cliente.getPhone());
 
-			if (clientFound != null) {
-				clientService.editClient(id, client);
-				return new ResponseEntity<>(HttpStatus.OK);
-			} else {
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			}
+			clientService.saveClient(clientFound);
+			return new ResponseEntity<>(clientFound, HttpStatus.OK);
 
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

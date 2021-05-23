@@ -1,11 +1,11 @@
 package com.demo.clients.crud.back.services;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.clients.crud.back.dao.IClientsDao;
 import com.demo.clients.crud.back.entity.Cliente;
@@ -17,25 +17,13 @@ public class ClientServiceImpl implements IClientService {
 	private IClientsDao clientsDao;
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Cliente> getClients() {
 		return (List<Cliente>) clientsDao.findAll();
 	}
 
 	@Override
-	public void editClient(Long id, Cliente client) {
-		
-		Cliente clienteAux = clientsDao.findById(id).get();
-		if (clienteAux != null) {
-			clienteAux.setName(client.getName());
-			clienteAux.setPhone(client.getPhone());
-			clienteAux.setSurname(client.getSurname());
-			clienteAux.setCreateAt(client.getCreateAt());
-			clientsDao.save(clienteAux);
-		}
-		
-	}
-
-	@Override
+	@Transactional
 	public void deleteClient(Long id) {
 
 		clientsDao.deleteById(id);
@@ -43,28 +31,18 @@ public class ClientServiceImpl implements IClientService {
 	}
 
 	@Override
-	public void createClient(Cliente cliente) {
-		
-		if(cliente != null)
-			if(cliente.getCreateAt()== null) {
-				cliente.setCreateAt(new Date());
-			}
-			clientsDao.save(cliente);
+	@Transactional
+	public Cliente saveClient(Cliente cliente) {
+
+		return clientsDao.save(cliente);
 
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Cliente getClientById(Long id) {
-		
-		Optional<Cliente> cliente = clientsDao.findById(id);
-		if(cliente.isPresent()) {
-			return cliente.get();
-		}
-		else {
-			return null;
-		}
-		
-		
+
+		return clientsDao.findById(id).orElseGet(null);
 
 	}
 
