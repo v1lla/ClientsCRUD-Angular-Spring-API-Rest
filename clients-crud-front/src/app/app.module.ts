@@ -7,18 +7,22 @@ import { FooterComponent } from './footer/footer.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { ClientesService } from './clientes/clientes.service';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { FormComponent } from './clientes/form.component'; 
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    ClientesComponent
+    ClientesComponent,
+    FormComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
     
   ],
   providers: [ClientesService],
