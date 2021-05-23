@@ -1,0 +1,70 @@
+<form id="clientForm" class="container my-5">
+  <h5 class="title">{{titulo}}</h5>
+  <div class="form-group">
+    <label for="inputClientName">Nombre</label>
+    <input
+      type="text"
+      class="form-control"
+      id="inputClientName"
+      name="clientName"
+      placeholder="Nombre"
+      [(ngModel)]="cliente.name"
+    />
+  </div>
+  <div class="form-group">
+    <label for="inputClientSurname">Apellido</label>
+    <input
+      type="text"
+      class="form-control"
+      id="inputClientSurname"
+      name="clientSurname"
+      placeholder="Apellido"
+      [(ngModel)]="cliente.surname"
+    />
+  </div>
+  <div class="form-group">
+    <label for="inputClientPhone">Teléfono</label>
+    <input
+      type="phone"
+      class="form-control"
+      id="inputClientPhone"
+      name="clientPhone"
+      placeholder="Teléfono"
+      [(ngModel)]="cliente.phone"
+    />
+  </div>
+  <div class="form-group">
+    <label for="inputClientCreateAt">Fecha de creación</label>
+    <input
+      disabled
+      type="text"
+      class="form-control"
+      id="inputClientCreateAt"
+      name="clientCreateAt"
+      placeholder="Fecha de creación"
+      [(ngModel)]="cliente.createAt"
+    />
+  </div>
+
+  <button
+    type="button"
+    class="btn btn-primary"
+    title="Modificar cliente"
+    (click)="modificarCliente()"
+    *ngIf="cliente.id else botonCrear"
+  >
+    Modificar cliente
+  </button>
+
+  <ng-template #botonCrear>
+    <button
+    type="button"
+    class="btn btn-primary"
+    title="Crear cliente"
+    (click)="createCliente()"
+  >
+    Crear cliente
+  </button>
+
+  </ng-template>
+</form>

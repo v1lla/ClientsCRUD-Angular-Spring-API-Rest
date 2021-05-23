@@ -5,27 +5,32 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class ClientesService {
+  private urlEndpointClients: string = 'http://localhost:8080/api/clients';
 
-  private urlEndpointGetClients : string = 'http://localhost:8080/api/clients';
-  private urlEndpointEditDeleteClient : string = 'http://localhost:8080/api/client/';
-  private urlEndpointCreateClient : string = 'http://localhost:8080/api/client';
-
-  constructor( private http : HttpClient) { }
-
+  constructor(private http: HttpClient) {}
 
   getClientes(): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(this.urlEndpointGetClients);
+    return this.http.get<Cliente[]>(this.urlEndpointClients);
   }
 
-  createCliente(cliente : Cliente) : Observable<Cliente>{
-    return this.http.post<Cliente>(this.urlEndpointCreateClient, cliente);
-  }
-  
-  deleteCliente(id : number): Observable<Cliente> {
-      return this.http.delete<Cliente>(this.urlEndpointEditDeleteClient + id);
+  getCliente(id : number) :Observable<Cliente> {
+    return this.http.get<Cliente>(`${this.urlEndpointClients}/${id}`);
   }
 
-  modifyCliente(id: number, cliente : Cliente) : Observable<Cliente>{
-    return this.http.put<Cliente>(this.urlEndpointEditDeleteClient + id, cliente);
+  createCliente(cliente: Cliente): Observable<Cliente> {
+    return this.http.post<Cliente>(this.urlEndpointClients, cliente);
   }
+
+  deleteCliente(id: number): Observable<Cliente> {
+    return this.http.delete<Cliente>(`${this.urlEndpointClients}/${id}`);
+  }
+
+  modifyCliente(cliente: Cliente): Observable<Cliente> {
+    return this.http.put<Cliente>(
+      `${this.urlEndpointClients}/${cliente.id}`,
+      cliente
+    );
+  }
+
+
 }

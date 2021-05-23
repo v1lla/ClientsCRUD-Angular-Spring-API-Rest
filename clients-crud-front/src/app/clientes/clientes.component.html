@@ -1,13 +1,18 @@
 <div class="container mt-5">
   <button
-    (click)="openModal()"
+    [routerLink] = "['/clientes/form']"
     type="button"
     class="editButton btn btn-success mb-5"
     title="Nuevo cliente"
   >
     Nuevo cliente
   </button>
-  <table class="table table-striped">
+
+<div *ngIf="clientList?.length == 0" class="alert alert-info">
+  No hay clientes en la base de datos
+</div>
+
+  <table class="table table-striped" *ngIf="clientList?.length > 0">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -19,15 +24,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let client of clientList; index as i">
+      <tr *ngFor="let cliente of clientList; index as i">
         <td>{{ i + 1 }}</td>
-        <td>{{ client.name }}</td>
-        <td>{{ client.surname }}</td>
-        <td>{{ client.phone }}</td>
-        <td>{{ client.createAt }}</td>
+        <td>{{ cliente.name }}</td>
+        <td>{{ cliente.surname }}</td>
+        <td>{{ cliente.phone }}</td>
+        <td>{{ cliente.createAt }}</td>
         <td>
           <button
-            (click)="openModal(client)"
+           [routerLink]="['/clientes/form/', cliente.id]"
             type="button"
             class="editButton btn btn-primary"
             title="Editar cliente"
@@ -35,7 +40,7 @@
             <i class="bi bi-pen"></i>
           </button>
           <button
-            (click)="eliminarCliente(client.id)"
+            (click)="eliminarCliente(cliente.id)"
             type="button"
             class="btn btn-danger"
             title="Eliminar cliente"
@@ -48,73 +53,3 @@
   </table>
 </div>
 
-<div id="myModal" class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modificando cliente</h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-          style="border: none"
-          (click)="openModal()"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="inputClientName">Nombre</label>
-            <input
-              type="text"
-              class="form-control"
-              id="inputClientName"
-              name="clientName"
-              placeholder="Nombre"
-              value="{{ clientToModifyCreate.name }}"
-            />
-          </div>
-          <div class="form-group">
-            <label for="inputClientSurname">Apellido</label>
-            <input
-              type="text"
-              class="form-control"
-              id="inputClientSurname"
-              name="clientSurname"
-              placeholder="Apellido"
-              value="{{ clientToModifyCreate.surname }}"
-            />
-          </div>
-          <div class="form-group">
-            <label for="inputClientPhone">Teléfono</label>
-            <input
-              type="phone"
-              class="form-control"
-              id="inputClientPhone"
-              name="clientPhone"
-              placeholder="Teléfono"
-              value="{{ clientToModifyCreate.phone }}"
-            />
-          </div>
-          <div class="form-group" >
-            <label for="inputClientCreateAt">Fecha de creación</label>
-            <input disabled
-              type="text"
-              class="form-control"
-              id="inputClientCreateAt"
-              name="clientCreateAt"
-              placeholder="Fecha de creación"
-              value="{{ clientToModifyCreate.createAt }}"
-            />
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" title="Modificar" (click)="modificarCrearCliente()">Modificar</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
